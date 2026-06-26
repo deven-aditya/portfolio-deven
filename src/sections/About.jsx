@@ -8,8 +8,12 @@ function About() {
     const title = useScrollAnimation();
     const desc = useScrollAnimation();
     const overview = useScrollAnimation();
+
     const left = useScrollAnimation();
     const right = useScrollAnimation();
+
+    const mobileLeft = useScrollAnimation();
+    const mobileRight = useScrollAnimation();
 
     return (
         <>
@@ -18,13 +22,11 @@ function About() {
                 .overview-text { font-size: clamp(13px, 1.5vw, 22px); width: 60%; padding-left: 40px; margin-top: 6px; }
                 .overview-list { font-size: clamp(13px, 1.5vw, 22px); padding-left: 60px; margin-top: 6px; }
 
-                /* Desktop layout: image + absolute positioned text */
                 .about-desktop { width: 80%; position: relative; display: block; }
                 .about-desktop-img { width: 100%; display: block; }
                 .about-desktop-left { position: absolute; top: 20%; left: 18%; color: white; }
                 .about-desktop-right { position: absolute; top: 20%; right: 18%; color: white; }
 
-                /* Mobile layout: stacked cards */
                 .about-mobile { display: none; flex-direction: column; gap: 32px; width: 100%; padding: 0 24px; box-sizing: border-box; color: white; }
 
                 @media (max-width: 768px) {
@@ -52,7 +54,7 @@ function About() {
                     <h2 style={{ fontSize: "clamp(20px, 2.2vw, 35px)", fontFamily: "Poppins, sans-serif", fontWeight: "normal" }}>Overview</h2>
                 </motion.div>
 
-                {/* Desktop: image with overlaid text */}
+                {/* Desktop */}
                 <div className="about-desktop">
                     <img src={OverviewBreak} className="about-desktop-img" />
 
@@ -78,21 +80,19 @@ function About() {
                     </motion.div>
                 </div>
 
-                {/* Mobile: stacked cards */}
+                {/* Mobile — ref terpisah supaya useInView bisa detect elemen yg visible */}
                 <div className="about-mobile">
-                    <motion.div initial="hidden" animate={left.controls} variants={fadeUp}>
-                        <div style={{ display: "flex", alignItems: "center", gap: 8, background: "#0E1D29", padding: 20, borderRadius: 14 }}>
-                            <div>
-                                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                                    <img src={OverviewPoint} style={{ height: 26 }} />
-                                    <h3 className="overview-heading">Education</h3>
-                                </div>
-                                <p className="overview-text">Currently studying Informatics Engineering at Atma Jaya Yogyakarta University</p>
+                    <motion.div ref={mobileLeft.ref} initial="hidden" animate={mobileLeft.controls} variants={fadeUp}>
+                        <div style={{ background: "#0E1D29", padding: 20, borderRadius: 14 }}>
+                            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                                <img src={OverviewPoint} style={{ height: 26 }} />
+                                <h3 className="overview-heading">Education</h3>
                             </div>
+                            <p className="overview-text">Currently studying Informatics Engineering at Atma Jaya Yogyakarta University</p>
                         </div>
                     </motion.div>
 
-                    <motion.div initial="hidden" animate={right.controls} variants={fadeUp}>
+                    <motion.div ref={mobileRight.ref} initial="hidden" animate={mobileRight.controls} variants={fadeUp}>
                         <div style={{ background: "#0E1D29", padding: 20, borderRadius: 14 }}>
                             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                                 <img src={OverviewPoint} style={{ height: 26 }} />
